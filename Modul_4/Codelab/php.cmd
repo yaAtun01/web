@@ -1,0 +1,1 @@
+@"C:\Users\atun\AppData\Local\Microsoft\WinGet\Packages\PHP.PHP.8.3_Microsoft.Winget.Source_8wekyb3d8bbwe\php.exe" -c "C:\kumpulansmt5\Pratikum\Prak_web\code4\php.ini" %*

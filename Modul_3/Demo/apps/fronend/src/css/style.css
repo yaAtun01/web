@@ -1,0 +1,185 @@
+html {
+    scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: #0b0b14;
+}
+::-webkit-scrollbar-thumb {
+    background: #2a2845;
+    border-radius: 9999px;
+    border: 2px solid #0b0b14;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #e91e63;
+}
+
+/* Glassmorphism Styles */
+.glass-nav {
+    background: rgba(11, 11, 20, 0.82);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card {
+    background: rgba(22, 21, 38, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card-hover {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-card-hover:hover {
+    transform: translateY(-4px);
+    border-color: rgba(233, 30, 99, 0.4);
+    box-shadow: 0 16px 32px -8px rgba(233, 30, 99, 0.15), 0 0 20px 0 rgba(139, 92, 246, 0.1);
+}
+
+/* Glow Effects */
+.glow-pink {
+    box-shadow: 0 0 30px rgba(233, 30, 99, 0.35);
+}
+
+.glow-purple {
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.35);
+}
+
+.text-glow-pink {
+    text-shadow: 0 0 20px rgba(233, 30, 99, 0.6);
+}
+
+/* Pulse Live Pill */
+@keyframes pulseLive {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.3);
+        opacity: 0.6;
+    }
+}
+.live-dot {
+    animation: pulseLive 2s infinite ease-in-out;
+}
+
+/* Floating animation for hero elements */
+@keyframes floatSlow {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+}
+.animate-float {
+    animation: floatSlow 5s ease-in-out infinite;
+}
+
+/* Gradient borders */
+.gradient-border {
+    position: relative;
+    border-radius: 1rem;
+    background: linear-gradient(135deg, rgba(233, 30, 99, 0.5), rgba(139, 92, 246, 0.5));
+    padding: 1px;
+}
+.gradient-border-inner {
+    background: #121124;
+    border-radius: calc(1rem - 1px);
+}
+
+/* Accordion transition for FAQ */
+details summary::-webkit-details-marker {
+    display: none;
+}
+details[open] summary svg {
+    transform: rotate(180deg);
+}
+
+/* ==========================================================================
+   THE VIBE GRID - STYLES & SKELETON ANIMATIONS
+   ========================================================================== */
+
+/* Shimmer Skeleton Animation */
+@keyframes shimmerAnim {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.skeleton-shimmer {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.03) 25%, rgba(255, 255, 255, 0.08) 50%, rgba(255, 255, 255, 0.03) 75%);
+    background-size: 200% 100%;
+    animation: shimmerAnim 1.6s infinite ease-in-out;
+}
+
+/* Aura Pill Buttons */
+.aura-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    white-space: nowrap;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    color: #cbd5e1;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+    user-select: none;
+}
+
+.aura-pill:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    border-color: rgba(233, 30, 99, 0.4);
+    transform: translateY(-1px);
+}
+
+.aura-pill.active {
+    background: linear-gradient(135deg, #e91e63, #8b5cf6);
+    color: #ffffff;
+    border-color: transparent;
+    box-shadow: 0 4px 14px rgba(233, 30, 99, 0.35);
+}
+
+/* Media Card Hover Effect */
+.vibe-card {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vibe-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(233, 30, 99, 0.5);
+    box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.5), 0 0 25px rgba(233, 30, 99, 0.2);
+}
+
+.vibe-card:hover .vibe-card-poster {
+    transform: scale(1.05);
+}
+
+.vibe-card-poster {
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Scrollbar None Utility */
+.scrollbar-none::-webkit-scrollbar {
+    display: none;
+}
+.scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+

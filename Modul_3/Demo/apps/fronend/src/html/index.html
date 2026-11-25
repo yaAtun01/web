@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlipPlay - Platform Streaming Video & Digital Reading Terpadu</title>
+    <meta name="description" content="FlipPlay mengintegrasikan streaming anime, drama, serta digital reading manga dan light novel ke dalam satu aplikasi web generasi baru.">
+    <meta name="keywords" content="FlipPlay, streaming anime, baca manga, baca light novel, streaming drama, platform hiburan terpadu">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            pink: '#e91e63',
+                            'pink-dark': '#d81b60',
+                            'pink-light': '#fce4ec',
+                            'pink-pastel': '#f8c8dc',
+                            purple: '#8b5cf6',
+                            'purple-dark': '#7c3aed',
+                            'purple-soft': '#f3e8ff',
+                            dark: '#0b0b14',
+                            'dark-card': '#131226',
+                            'dark-card-hover': '#1a1835',
+                            border: 'rgba(255, 255, 255, 0.08)',
+                            cream: '#fff5f7'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="src/css/style.css">
+</head>
+<body class="bg-brand-dark text-gray-200 font-sans antialiased selection:bg-brand-pink selection:text-white relative overflow-x-hidden min-h-screen">
+
+    <div class="fixed top-0 left-1/4 w-[600px] h-[600px] bg-brand-pink/10 rounded-full blur-[140px] pointer-events-none -z-10"></div>
+    <div class="fixed bottom-1/3 right-10 w-[500px] h-[500px] bg-brand-purple/10 rounded-full blur-[140px] pointer-events-none -z-10"></div>
+
+    <header class="sticky top-0 z-50 glass-nav transition-all duration-300" id="main-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <div class="flex-shrink-0">
+                    <a href="#home" class="flex items-center gap-3 group" aria-label="Beranda FlipPlay">
+                        <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-brand-pink via-rose-500 to-brand-purple p-0.5 shadow-lg shadow-brand-pink/25 group-hover:shadow-brand-pink/50 transition-all duration-300">
+                            <div class="w-full h-full bg-brand-dark rounded-[14px] flex items-center justify-center">
+                                <span class="text-transparent bg-clip-text bg-gradient-to-tr from-brand-pink to-brand-purple font-extrabold text-2xl tracking-tighter">FP</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-2xl font-extrabold tracking-tight text-white group-hover:text-brand-pink transition-colors">
+                                Flip<span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-pink to-brand-purple">Play</span>
+                            </span>
+                            <span class="text-[10px] tracking-widest text-gray-400 uppercase font-semibold -mt-1">Stream &bull; Read</span>
+                        </div>
+                    </a>
+                </div>
+
+                <nav class="hidden md:flex items-center space-x-1 lg:space-x-2" aria-label="Navigasi Utama FlipPlay">
+                    <a href="#home" class="px-3 py-2 text-sm font-medium text-gray-300 hover:text-brand-pink transition-colors rounded-lg hover:bg-white/5">Beranda</a>
+                    <a href="#fitur" class="px-3 py-2 text-sm font-medium text-gray-300 hover:text-brand-pink transition-colors rounded-lg hover:bg-white/5">Fitur Unggulan</a>
+                    <a href="#vibe-grid" class="px-3 py-2 text-sm font-bold text-brand-pink hover:text-white transition-colors rounded-lg hover:bg-white/5 flex items-center gap-1.5">
+                        <span>The Vibe Grid</span>
+                        
+                    </a>
+                    <a href="#harga" class="px-3 py-2 text-sm font-medium text-gray-300 hover:text-brand-pink transition-colors rounded-lg hover:bg-white/5">Paket Harga</a>
+                    <a href="#kontak" class="px-3 py-2 text-sm font-medium text-gray-300 hover:text-brand-pink transition-colors rounded-lg hover:bg-white/5">Kontak</a>
+                </nav>
+
+                <!-- Desktop Action CTA Buttons -->
+                <div class="hidden md:flex items-center space-x-3">
+                    <a href="#harga" class="text-sm font-semibold text-gray-300 hover:text-white px-4 py-2 transition-colors">
+                        Masuk
+                    </a>
+                    <a href="#kontak" class="relative group inline-flex items-center justify-center p-0.5 rounded-full font-semibold text-sm overflow-hidden shadow-lg shadow-brand-pink/25 hover:shadow-brand-pink/40 transition-all">
+                        <span class="absolute inset-0 bg-gradient-to-r from-brand-pink to-brand-purple rounded-full"></span>
+                        <span class="relative px-5 py-2.5 bg-gradient-to-r from-brand-pink to-brand-pink-dark rounded-full text-white flex items-center gap-1.5 group-hover:bg-opacity-90 transition-all">
+                            <span>Coba Gratis 14 Hari</span>
+                            <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                            </svg>
+                        </span>
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button (Hamburger) -->
+                <div class="md:hidden flex items-center gap-2">
+                    <a href="#kontak" class="px-3 py-1.5 text-xs font-semibold bg-brand-pink text-white rounded-full">
+                        Coba Gratis
+                    </a>
+                    <button id="mobile-menu-btn" type="button" class="p-2 rounded-xl text-gray-400 hover:text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-brand-pink" aria-controls="mobile-menu" aria-expanded="false" aria-label="Buka navigasi menu">
+                        <svg id="mobile-menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <nav id="mobile-menu" class="hidden md:hidden glass-nav border-t border-white/10 px-4 pt-3 pb-6 space-y-2 animate-fadeIn" aria-label="Navigasi Menu Mobile">
+            <a href="#home" class="block px-3 py-2 rounded-lg text-base font-medium text-gray-200 hover:text-brand-pink hover:bg-white/5">Beranda</a>
+            <a href="#fitur" class="block px-3 py-2 rounded-lg text-base font-medium text-gray-200 hover:text-brand-pink hover:bg-white/5">Fitur Unggulan</a>
+            <a href="#vibe-grid" class="block px-3 py-2 rounded-lg text-base font-bold text-brand-pink hover:text-white hover:bg-white/5 flex items-center justify-between">
+                <span>The Vibe Grid</span>
+                <span class="px-2 py-0.5 text-xs font-bold bg-brand-pink text-white rounded-full">Kitsu API</span>
+            </a>
+            <a href="#keunggulan" class="block px-3 py-2 rounded-lg text-base font-medium text-gray-200 hover:text-brand-pink hover:bg-white/5">Ekosistem Terpadu</a>
+            <a href="#harga" class="block px-3 py-2 rounded-lg text-base font-medium text-gray-200 hover:text-brand-pink hover:bg-white/5">Paket Harga</a>
+            <a href="#kontak" class="block px-3 py-2 rounded-lg text-base font-medium text-gray-200 hover:text-brand-pink hover:bg-white/5">Kontak Tim FlipPlay</a>
+            <div class="pt-4 flex flex-col gap-2">
+                <a href="#harga" class="w-full text-center py-2.5 text-sm font-semibold text-gray-300 hover:text-white border border-white/10 rounded-full">
+                    Masuk ke Akun
+                </a>
+                <a href="#kontak" class="w-full text-center py-2.5 text-sm font-semibold bg-gradient-to-r from-brand-pink to-brand-purple text-white rounded-full shadow-lg shadow-brand-pink/20">
+                    Mulai Uji Coba Gratis 14 Hari
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER (SEMANTIK <main>)-->
+    <main>
+
+        <!-- 2. HERO SECTION (<section id="home">-->
+        <section id="home" class="relative pt-12 pb-24 md:pt-20 md:pb-32 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <!-- Main Hero Headline & Subtitle -->
+                <div class="text-center max-w-4xl mx-auto mb-10">
+                    <h1 class="text-4xl sm:text-5xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.15]">
+                        Satu Platform untuk <br class="hidden sm:block">
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-pink via-pink-400 to-brand-purple text-glow-pink">Streaming Anime</span> 
+                        &amp; <span class="underline decoration-brand-purple decoration-wavy decoration-2">Baca Manga</span>.
+                    </h1>
+                    <p class="mt-6 text-lg sm:text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto">
+                        FlipPlay mengintegrasikan layanan streaming video (<mark class="bg-brand-pink/20 text-brand-pink-light px-1.5 py-0.5 rounded font-medium">Anime &amp; Drama</mark>) dan digital reading (<mark class="bg-brand-purple/20 text-brand-purple-soft px-1.5 py-0.5 rounded font-medium">Manga &amp; Light Novel</mark>) ke dalam satu ekosistem web terpadu tanpa perlu berganti aplikasi.
+                    </p>
+
+                    <!-- Dual Call-to-Action Buttons -->
+                    <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <a href="#kontak" class="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-brand-pink to-brand-pink-dark text-white font-bold text-base shadow-xl shadow-brand-pink/30 hover:shadow-brand-pink/50 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+                            <span>Mulai Coba Gratis 14 Hari</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                            </svg>
+                        </a>
+                        <a href="#vibe-grid" class="w-full sm:w-auto px-8 py-4 rounded-full bg-white/10 hover:bg-white/15 text-white font-semibold text-base border border-white/15 backdrop-blur-md transition-all flex items-center justify-center gap-2">
+                            <span>Jelajahi The Vibe Grid</span>
+                        </a>
+                    </div>
+                </div>
+                    <!-- SHOWCASE VIEW 2: DIGITAL MANGA READER MOCKUP (HIDDEN BY DEFAULT) -->
+                    <div id="hero-manga-preview" class="hidden bg-gradient-to-b from-brand-dark-card to-black rounded-b-3xl border-x border-b border-white/10 p-4 sm:p-6 lg:p-8">
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                            
+                            <!-- Manga Canvas Reader (Left 8 cols) -->
+                            <div class="lg:col-span-8 bg-zinc-900 rounded-2xl border border-white/10 p-4 sm:p-6 relative min-h-[340px] flex flex-col justify-between">
+                                <div class="flex items-center justify-between text-xs text-gray-300 pb-3 border-b border-white/10">
+                                    <div class="flex items-center gap-2">
+                                        <span class="bg-brand-purple px-2 py-0.5 rounded text-[10px] font-bold text-white">MANGA</span>
+                                        <span class="font-bold text-white">Sousou no Frieren &bull; Chapter 36</span>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <span>Hal 14 / 28</span>
+                                        <span class="text-emerald-400 font-mono">Web Reader v2.4</span>
+                                    </div>
+                                </div>
+
+                                <!-- Reading Page Mockup -->
+                                <div class="my-6 bg-zinc-950 p-6 rounded-xl border border-white/5 text-center flex flex-col items-center justify-center space-y-3">
+                                    <span class="text-5xl">&#128218;</span>
+                                    <h4 class="text-base font-bold text-white tracking-wide">"Perjalanan Menuju Surga Aureole"</h4>
+                                    <p class="text-xs text-gray-400 max-w-md italic">
+                                        "Setelah Himmel meninggal, Frieren menyadari betapa singkatnya waktu manusia. Ini adalah awal dari perjalanannya untuk memahami hati manusia..."
+                                    </p>
+                                    <div class="flex items-center gap-2 pt-2">
+                                        <span class="px-2 py-0.5 rounded bg-white/10 text-[10px] text-gray-300">Mode Baca: Webtoon Vertikal</span>
+                                        <span class="px-2 py-0.5 rounded bg-white/10 text-[10px] text-gray-300">HD Image Compression</span>
+                                    </div>
+                                </div>
+
+                                <!-- Reader Control Navigation -->
+                                <div class="flex items-center justify-between pt-3 border-t border-white/10 text-xs">
+                                    <button type="button" class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium flex items-center gap-1">
+                                        &larr; Chapter Sebelumnya
+                                    </button>
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-2.5 h-2.5 rounded-full bg-brand-purple"></span>
+                                        <span class="text-gray-300">Auto Bookmark Aktif</span>
+                                    </div>
+                                    <button type="button" class="px-3 py-1.5 rounded-lg bg-brand-purple hover:bg-brand-purple-dark text-white font-medium flex items-center gap-1">
+                                        Chapter Selanjutnya &rarr;
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Manga Info & Reading Stats (Right 4 cols) -->
+                            <div class="lg:col-span-4 space-y-4">
+                                <div class="p-4 rounded-2xl bg-white/5 border border-white/10">
+                                    <span class="text-xs font-bold text-brand-purple uppercase tracking-wider">Tentang Judul Ini</span>
+                                    <h4 class="text-base font-extrabold text-white mt-1">Frieren: Beyond Journey's End</h4>
+                                    <p class="text-xs text-gray-400 mt-1 leading-relaxed">
+                                        130+ Chapter manga resmi berlisensi, update tiap Rabu pukul 20.00 WIB bersamaan dengan rilis global.
+                                    </p>
+                                    <div class="mt-4 pt-3 border-t border-white/10 flex justify-between text-xs">
+                                        <div>
+                                            <p class="text-gray-400">Total Pembaca</p>
+                                            <p class="font-bold text-white">450K+</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-gray-400">Rating Komunitas</p>
+                                            <p class="font-bold text-amber-400">&starf; 9.4/10</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-gray-400">Status</p>
+                                            <p class="font-bold text-emerald-400">Ongoing</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <a href="#katalog" class="block text-center py-2.5 rounded-xl bg-brand-purple/20 hover:bg-brand-purple/30 text-brand-purple-soft font-bold text-xs border border-brand-purple/40 transition-colors">
+                                    Buka Seluruh Katalog Manga &rarr;
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <figcaption class="sr-only">Pratinjau interaktif pemutar video anime dan pembaca manga digital terpadu FlipPlay</figcaption>
+                </figure>
+
+            </div>
+        </section>
+        
+        <!-- 3. FITUR UNGGULAN SECTION (<section id="fitur">-->
+        <section id="fitur" class="py-20 md:py-28 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <!-- Section Header -->
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight mt-4">
+                        Dua Layanan Hiburan, <br class="hidden sm:inline">
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-pink to-brand-purple">Satu Pengalaman Sempurna</span>
+                    </h2>
+                    <p class="mt-4 text-base sm:text-lg text-gray-400">
+                        Biasanya kamu butuh satu aplikasi untuk streaming anime dan aplikasi terpisah untuk membaca manga. FlipPlay menyatukannya dalam satu arsitektur web modern.
+                    </p>
+                </div>
+
+                <!-- 6 Feature Articles Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Feature 1: Video Streaming -->
+                    <article class="glass-card glass-card-hover rounded-2xl p-7 flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-pink to-rose-600 flex items-center justify-center text-white text-xl mb-5 shadow-lg shadow-brand-pink/30">
+                                &#9654;
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Streaming Video 4K HDR</h3>
+                            <p class="text-sm text-gray-400 leading-relaxed">
+                                Tonton anime simulcast dan serial drama Asia dengan bitrate tinggi, dynamic buffering, serta opsi subtitle multi-bahasa termasuk Bahasa Indonesia.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-brand-pink font-semibold">
+                            <span>Audio Jepang, Korea, Dubbing Indo</span>
+                            <span>&rarr;</span>
+                        </div>
+                    </article>
+
+                    <!-- Feature 2: Digital Reader -->
+                    <article class="glass-card glass-card-hover rounded-2xl p-7 flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-purple to-indigo-600 flex items-center justify-center text-white text-xl mb-5 shadow-lg shadow-brand-purple/30">
+                                &#128214;
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Digital Reader Cerdas</h3>
+                            <p class="text-sm text-gray-400 leading-relaxed">
+                                Nikmati ribuan judul manga dan light novel langsung di web browser. Dilengkapi mode scroll vertikal (webtoon), page-flip, night-mode, dan font resize.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-brand-purple font-semibold">
+                            <span>Tanpa Install Aplikasi Tambahan</span>
+                            <span>&rarr;</span>
+                        </div>
+                    </article>
+
+                    <!-- Feature 3: Smart Cross-Media Sync -->
+                    <article class="glass-card glass-card-hover rounded-2xl p-7 flex flex-col justify-between border-brand-pink/30 bg-gradient-to-b from-brand-pink/10 to-transparent">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-pink-500 flex items-center justify-center text-white text-xl mb-5 shadow-lg shadow-amber-400/25">
+                                &#128279;
+                            </div>
+                            <div class="inline-block bg-brand-pink text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full mb-2">Khas FlipPlay</div>
+                            <h3 class="text-xl font-bold text-white mb-2">Bookmark Lintas Format</h3>
+                            <p class="text-sm text-gray-400 leading-relaxed">
+                                Selesai menonton anime episode terbaru? Algoritma FlipPlay langsung merekomendasikan chapter manga persis di mana episode tersebut berakhir.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-amber-300 font-semibold">
+                            <span>Anti Spoiler &bull; Transisi Mulus</span>
+                            <span>&rarr;</span>
+                        </div>
+                    </article>
+
+                    <!-- Feature 4: Offline Reading & Download -->
+                    <article class="glass-card glass-card-hover rounded-2xl p-7 flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center text-white text-xl mb-5 shadow-lg shadow-emerald-400/20">
+                                &#11015;
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Mode Offline &amp; Hemat Kuota</h3>
+                            <p class="text-sm text-gray-400 leading-relaxed">
+                                Simpan episode dan chapter favorit ke cache peramban dengan kompresi cerdas. Lanjutkan membaca dan menonton saat di pesawat tanpa internet.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-emerald-400 font-semibold">
+                            <span>Unduh Sekali, Buka Kapan Saja</span>
+                            <span>&rarr;</span>
+                        </div>
+                    </article>
+
+                    <!-- Feature 5: Multi-Profile & Family Control -->
+                    <article class="glass-card glass-card-hover rounded-2xl p-7 flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center text-white text-xl mb-5 shadow-lg shadow-blue-400/20">
+                                &#128101;
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Multi-Profil &amp; Ramah Keluarga</h3>
+                            <p class="text-sm text-gray-400 leading-relaxed">
+                                Buat hingga 5 profil terpisah dalam satu langganan. Tersedia mode khusus anak (Kids Safe) yang menyaring konten kekerasan dan dewasa secara otomatis.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-blue-400 font-semibold">
+                            <span>Rekomendasi Terpisah per Profil</span>
+                            <span>&rarr;</span>
+                        </div>
+                    </article>
+
+                    <!-- Feature 6: Watch Party & Community -->
+                    <article class="glass-card glass-card-hover rounded-2xl p-7 flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center text-white text-xl mb-5 shadow-lg shadow-pink-500/25">
+                                &#127881;
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Nonton Bareng &amp; Komentar Chapter</h3>
+                            <p class="text-sm text-gray-400 leading-relaxed">
+                                Bikin room nobar bareng sahabat dengan sinkronisasi waktu milidetik. Tinggalkan review dan diskusikan plot twist manga favoritmu per panel.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-pink-400 font-semibold">
+                            <span>Ruang Obrolan Realtime</span>
+                            <span>&rarr;</span>
+                        </div>
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+
+        <section id="vibe-grid" class="py-20 md:py-28 bg-brand-dark-card/40 border-y border-white/10 relative">
+            <span id="katalog" class="sr-only">Katalog The Vibe Grid FlipPlay</span>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <!-- Section Header -->
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+                    <div class="max-w-2xl">
+                        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
+                            The Vibe <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-pink via-purple-400 to-brand-purple">Grid</span>
+                        </h2>
+                        <p class="text-gray-300 text-sm sm:text-base mt-2 leading-relaxed">
+                            Jelajahi anime dan media terbaik dengan filter real-time berbasis suasana hati (Aura) atau cari judul favoritmu secara langsung melalui API publik Kitsu.
+                        </p>
+                    </div>
+
+                    <!-- Live Status & Stats Pills (Computed via Array Methods reduce() & filter()) -->
+                    <div class="flex flex-wrap items-center gap-2 md:justify-end text-xs">
+                        <div class="glass-card px-3.5 py-2 rounded-xl flex items-center gap-2 border border-white/10">
+                            <span class="text-gray-400">Total Media:</span>
+                            <span id="vibe-stat-total" class="font-extrabold text-brand-pink">--</span>
+                        </div>
+                        <div class="glass-card px-3.5 py-2 rounded-xl flex items-center gap-2 border border-white/10">
+                            <span class="text-gray-400">Rata-rata Skor:</span>
+                            <span id="vibe-stat-avg" class="font-extrabold text-amber-400">--</span>
+                        </div>
+                        <div class="glass-card px-3.5 py-2 rounded-xl flex items-center gap-2 border border-white/10">
+                            <span class="text-gray-400">Watchlist:</span>
+                            <span id="vibe-stat-watchlist" class="font-extrabold text-brand-purple">0</span>
+                        </div>
+                        <div class="glass-card px-3.5 py-2 rounded-xl flex items-center gap-2 border border-white/10">
+                            <span class="text-gray-400">Status API:</span>
+                            <span id="vibe-stat-source" class="font-bold text-emerald-400">Menghubungkan...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Unified Search & Controls Toolbar -->
+                <div class="glass-card p-4 sm:p-5 rounded-2xl mb-8 space-y-4 border border-white/10">
+                    <div class="flex flex-col lg:flex-row items-stretch lg:items-center gap-3">
+                        
+                        <!-- 1. UNIFIED SEARCH INPUT (REAL-TIME FILTER BY TITLE) -->
+                        <div class="relative flex-1">
+                            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                </svg>
+                            </div>
+                            <input 
+                                type="text" 
+                                id="vibe-search-input" 
+                                placeholder="Cari judul anime / manga secara real-time (contoh: Frieren, Jujutsu, Hunter)..." 
+                                class="w-full pl-10 pr-24 py-2.5 bg-black/50 border border-white/10 rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition-all"
+                                autocomplete="off"
+                            >
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center gap-1.5">
+                                <button id="vibe-search-clear" type="button" class="hidden text-gray-400 hover:text-white text-xs px-1.5 py-0.5 rounded bg-white/10" title="Bersihkan pencarian">
+                                    &times;
+                                </button>
+                                <kbd class="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono text-gray-500 bg-white/5 border border-white/10 rounded">
+                                    Ctrl+K
+                                </kbd>
+                            </div>
+                        </div>
+
+                        <!-- 2. QUICK CONTROLS: FORMAT, SORT, REFRESH, SIMULASI ERROR -->
+                        <div class="flex flex-wrap items-center gap-2">
+                            <!-- Format Filter Dropdown -->
+                            <select id="vibe-filter-type" class="bg-brand-dark-card border border-white/10 text-xs font-semibold text-gray-200 rounded-xl px-3 py-2.5 focus:outline-none focus:border-brand-pink transition-all cursor-pointer">
+                                <option value="all">Semua Format (TV, Movie)</option>
+                                <option value="TV">Format TV Series</option>
+                                <option value="Movie">Format Film Layar Lebar</option>
+                            </select>
+
+                            <!-- Sort Dropdown -->
+                            <select id="vibe-sort-by" class="bg-brand-dark-card border border-white/10 text-xs font-semibold text-gray-200 rounded-xl px-3 py-2.5 focus:outline-none focus:border-brand-pink transition-all cursor-pointer">
+                                <option value="score-desc">Skor Tertinggi &darr;</option>
+                                <option value="title-asc">Judul A - Z</option>
+                                <option value="episodes-desc">Episode Terbanyak</option>
+                                <option value="popularity-asc">Paling Populer</option>
+                            </select>
+
+                            <!-- Refresh Button -->
+                            <button id="vibe-btn-refresh" type="button" class="px-3 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white text-xs font-semibold border border-white/10 flex items-center gap-1.5 transition-all" title="Muat ulang data dari Kitsu API">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                                <span>Refresh</span>
+                            </button>
+
+                            <!-- Evaluator / Developer Simulate Error Button -->
+                            <button id="vibe-btn-simulate-error" type="button" class="px-3 py-2.5 rounded-xl bg-red-950/40 hover:bg-red-900/60 text-red-300 text-xs font-semibold border border-red-500/30 flex items-center gap-1.5 transition-all" title="Uji penanganan error dan tampilan pesan gagal">
+                                <span>Simulasi Error</span>
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <!-- 3. AURA-BASED DISCOVERY FILTER BUTTONS -->
+                    <div class="pt-3 border-t border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-bold text-gray-300">Aura Mood:</span>
+                            <span class="text-[11px] text-gray-500">Pilih getaran rasa media yang ingin kamu tonton</span>
+                        </div>
+                        <p id="vibe-result-count" class="text-xs font-semibold text-brand-pink"></p>
+                    </div>
+
+                    <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none" role="tablist" aria-label="Aura-based discovery filter">
+                        <button class="aura-pill active" data-aura="all">
+                            <span>✨</span> Semua Vibes
+                        </button>
+                        <button class="aura-pill" data-aura="high-energy">
+                            <span>⚡</span> High Energy
+                        </button>
+                        <button class="aura-pill" data-aura="melancholy">
+                            <span>🌧️</span> Melancholy
+                        </button>
+                        <button class="aura-pill" data-aura="binge">
+                            <span>🍿</span> Binge Mode
+                        </button>
+                        <button class="aura-pill" data-aura="cozy">
+                            <span>🌸</span> Cozy Chill
+                        </button>
+                        <button class="aura-pill" data-aura="mind-bender">
+                            <span>🔮</span> Mind-Bender
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- 4. DYNAMIC MEDIA GRID CARD CONTAINER (Loaded via Fetch API & Array Methods) -->
+                <div id="vibe-grid-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 min-h-[400px]">
+                    <!-- Shimmer skeletons and media cards will be rendered dynamically here via template literal -->
+                </div>
+
+            </div>
+        </section>
+
+        <!-- =====================================================================
+             7. PAKET HARGA SECTION (<section id="harga">)
+             ===================================================================== -->
+        <section id="harga" class="py-20 md:py-28 bg-brand-dark-card/30 border-t border-white/10 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <!-- Pricing Header -->
+                <div class="text-center max-w-3xl mx-auto mb-14">
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight mt-4">
+                        Paket Sederhana, Akses Tanpa Batas
+                    </h2>
+                    <p class="mt-4 text-base sm:text-lg text-gray-400">
+                        Pilih paket yang paling cocok untuk gaya hiburanmu. Batalkan atau ubah paket kapan saja tanpa denda.
+                    </p>
+
+                    <!-- Billing Period Switcher (Bulanan vs Tahunan) -->
+                    <div class="mt-8 inline-flex items-center gap-3 bg-brand-dark-card border border-white/10 px-4 py-2 rounded-full shadow-inner">
+                        <span class="text-xs sm:text-sm font-semibold text-gray-300">Bulanan</span>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="billing-toggle" class="sr-only peer">
+                            <div class="w-11 h-6 bg-white/20 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-pink"></div>
+                        </label>
+                        <span class="text-xs sm:text-sm font-semibold text-white flex items-center gap-1.5">
+                            <span>Tahunan</span>
+                            <span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold px-2 py-0.5 rounded-full">Hemat 20%</span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- 3 Pricing Cards (Semantic <article>) -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+                    
+                    <!-- Tier 1: Free Explorer -->
+                    <article class="glass-card rounded-3xl p-8 flex flex-col justify-between border-white/10 hover:border-white/20 transition-all">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-xl font-bold text-white">Free Explorer</h3>
+                                <span class="px-2.5 py-1 rounded-full bg-white/10 text-gray-300 text-xs font-semibold">Gratis Selamanya</span>
+                            </div>
+                            <p class="text-xs text-gray-400 leading-relaxed mb-6">
+                                Cocok untuk mencoba fitur dasar dan menonton episode anime perdana tanpa biaya sama sekali.
+                            </p>
+                            <div class="mb-8">
+                                <span class="text-4xl font-extrabold text-white">Rp 0</span>
+                                <span class="text-xs text-gray-400 ml-1">/bulan</span>
+                            </div>
+
+                            <!-- Features List -->
+                            <ul class="space-y-3.5 text-xs text-gray-300" role="list">
+                                <li class="flex items-start gap-2.5">
+                                    <span class="text-brand-pink font-bold mt-0.5">&#10003;</span>
+                                    <span>Akses 500+ episode anime pilihan</span>
+                                </li>
+                                <li class="flex items-start gap-2.5">
+                                    <span class="text-brand-pink font-bold mt-0.5">&#10003;</span>
+                                    <span>Baca 3 chapter awal seluruh manga</span>
+                                </li>
+                                <li class="flex items-start gap-2.5">
+                                    <span class="text-brand-pink font-bold mt-0.5">&#10003;</span>
+                                    <span>Resolusi standar hingga 720p HD</span>
+                                </li>
+                                <li class="flex items-start gap-2.5 text-gray-500">
+                                    <span class="mt-0.5">&#10007;</span>
+                                    <span>Diselingi iklan video pendek</span>
+                                </li>
+                                <li class="flex items-start gap-2.5 text-gray-500">
+                                    <span class="mt-0.5">&#10007;</span>
+                                    <span>Tidak dapat mengunduh offline</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="mt-8 pt-6 border-t border-white/10">
+                            <a href="#kontak" class="w-full block text-center py-3 rounded-full border border-white/20 hover:bg-white/10 text-white font-bold text-sm transition-all">
+                                Daftar Akun Gratis
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Tier 2: Pro (Paling Populer) -->
+                    <article class="relative rounded-3xl p-8 flex flex-col justify-between bg-gradient-to-b from-brand-pink/20 via-brand-dark-card to-brand-dark-card border-2 border-brand-pink shadow-2xl shadow-brand-pink/20 scale-100 lg:-translate-y-2">
+                        <span class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-brand-pink to-brand-purple text-white text-xs font-extrabold px-4 py-1 rounded-full uppercase tracking-wider shadow-md">
+                            Paling Banyak Dipilih
+                        </span>
+
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-xl font-bold text-white">Pro Streamer &amp; Reader</h3>
+                                <span class="px-2.5 py-1 rounded-full bg-brand-pink/20 text-brand-pink text-xs font-semibold">1 Akun Pribadi</span>
+                            </div>
+                            <p class="text-xs text-gray-300 leading-relaxed mb-6">
+                                Pengalaman penuh tanpa batas untuk penikmat anime dan manga sejati tanpa gangguan iklan.
+                            </p>
+                            <div class="mb-8">
+                                <span id="price-pro" class="text-4xl font-extrabold text-white">Rp 49.000</span>
+                                <span id="period-pro" class="text-xs text-gray-400 ml-1">/bulan</span>
+                            </div>
+
+                            <ul class="space-y-3.5 text-xs text-gray-200" role="list">
+                                <li class="flex items-start gap-2.5">
+                                    <span class="text-brand-pink font-bold mt-0.5">&#10003;</span>
+                                    <span>Akses <strong class="text-white">seluruh 3.500+ anime &amp; drama</strong> tanpa batas</span>
+                                </li>
+                                <li class="flex items-start gap-2.5">
+                                    <span class="text-brand-pink font-bold mt-0.5">&#10003;</span>
+                                    <span>Baca <strong class="text-white">18.000+ chapter manga &amp; novel</strong> sepuasnya</span>
+                                </li>
+                                <li class="flex items-start gap-2.5">
+                                    <span class="text-brand-pink font-bold mt-0.5">&#10003;</span>
+                                    <span>Kualitas streaming <strong class="text-white">1080p FHD &amp; 4K</strong></span>
+                                </li>
+                                <li class="flex items-start gap-2.5">
+                                    <span class="text-brand-pink font-bold mt-0.5">&#10003;</span>
+                                    <span><strong class="text-white">Bebas Iklan</strong> 100% saat menonton &amp; membaca</span>
+                                </li>
+                                <li class="flex items-start gap-2.5">
+                                    <span class="text-brand-pink font-bold mt-0.5">&#10003;</span>
+                                    <span>Auto-Bridge Sync episode ke manga chapter</span>
+                                </li>
+                                <li class="flex items-start gap-2.5">
+                                    <span class="text-brand-pink font-bold mt-0.5">&#10003;</span>
+                                    <span>Download offline hingga 30 judul</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="mt-8 pt-6 border-t border-brand-pink/30">
+                            <a href="#kontak" class="w-full block text-center py-3.5 rounded-full bg-gradient-to-r from-brand-pink to-brand-pink-dark hover:from-brand-pink-dark hover:to-brand-pink text-white font-extrabold text-sm shadow-lg shadow-brand-pink/40 hover:scale-[1.02] active:scale-[0.98] transition-all">
+                                Mulai Coba Gratis 14 Hari
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Tier 3: Ultimate Family -->
+                    <article class="glass-card rounded-3xl p-8 flex flex-col justify-between border-white/10 hover:border-brand-purple/50 transition-all">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-xl font-bold text-white">Ultimate Family</h3>
+                                <span class="px-2.5 py-1 rounded-full bg-brand-purple/20 text-brand-purple text-xs font-semibold">Hingga 5 Layar</span>
+                            </div>
+                            <p class="text-xs text-gray-400 leading-relaxed mb-6">
+                                Solusi terbaik untuk berbagi bersama keluarga dan sahabat dengan kontrol profil independen.
+                            </p>
+                            <div class="mb-8">
+                                <span id="price-ultimate" class="text-4xl font-extrabold text-white">Rp 89.000</span>
+                                <span id="period-ultimate" class="text-xs text-gray-400 ml-1">/bulan</span>
+                            </div>
+
+                            <ul class="space-y-3.5 text-xs text-gray-300" role="list">
+                                <li class="flex items-start gap-2.5">
+                                    <span class="text-brand-purple font-bold mt-0.5">&#10003;</span>
+                                    <span>Semua keunggulan paket Pro</span>
+                                </li>
+                                <li class="flex items-start gap-2.5">
+                                    <span class="text-brand-purple font-bold mt-0.5">&#10003;</span>
+                                    <span>Streaming serentak di <strong class="text-white">5 perangkat</strong> berbeda</span>
+                                </li>
+                                <li class="flex items-start gap-2.5">
+                                    <span class="text-brand-purple font-bold mt-0.5">&#10003;</span>
+                                    <span>Kualitas maksimal <strong class="text-white">4K Ultra HD &amp; Dolby Atmos</strong></span>
+                                </li>
+                                <li class="flex items-start gap-2.5">
+                                    <span class="text-brand-purple font-bold mt-0.5">&#10003;</span>
+                                    <span>Fitur Watch Party tanpa batas peserta</span>
+                                </li>
+                                <li class="flex items-start gap-2.5">
+                                    <span class="text-brand-purple font-bold mt-0.5">&#10003;</span>
+                                    <span>Download offline unlimited</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="mt-8 pt-6 border-t border-white/10">
+                            <a href="#kontak" class="w-full block text-center py-3 rounded-full bg-brand-purple hover:bg-brand-purple-dark text-white font-bold text-sm shadow-lg shadow-brand-purple/30 transition-all">
+                                Pilih Paket Family
+                            </a>
+                        </div>
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+      
+        <section id="kontak" class="py-20 md:py-28 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                    
+                    <!-- Left Column: Contact Information & Address (5 cols) -->
+                    <div class="lg:col-span-5 space-y-8">
+                        <div>
+                            <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mt-4">
+                                Mulai Perjalanan Hiburanmu Bersama FlipPlay
+                            </h2>
+                            <p class="mt-3 text-sm sm:text-base text-gray-300 leading-relaxed">
+                                Ada pertanyaan seputar kemitraan konten, masukan fitur, atau ingin berkonsultasi mengenai paket enterprise? Tim FlipPlay siap membantu Anda setiap saat.
+                            </p>
+                        </div>
+
+                        <!-- Semantic Address and Contact Details -->
+                        <address class="not-italic space-y-4">
+                            
+                            <div class="flex items-start gap-4 p-4 rounded-2xl bg-white/5 border border-white/10">
+                                <div class="w-10 h-10 rounded-xl bg-brand-pink/20 text-brand-pink flex items-center justify-center shrink-0 text-lg">
+                                    &#128205;
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-white">Kantor Pusat FlipPlay</h4>
+                                    <p class="text-xs text-gray-400 mt-0.5 leading-relaxed">
+                                        Cyber Tower Level 18, Jl. H.R. Rasuna Said No. 5, Kuningan, Jakarta Selatan 12950, Indonesia
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4 p-4 rounded-2xl bg-white/5 border border-white/10">
+                                <div class="w-10 h-10 rounded-xl bg-brand-purple/20 text-brand-purple flex items-center justify-center shrink-0 text-lg">
+                                    &#9993;
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-white">Surat Elektronik &amp; Dukungan</h4>
+                                    <p class="text-xs text-gray-400 mt-0.5">
+                                        <a href="mailto:halo@flipplay.id" class="text-brand-pink hover:underline font-semibold">halo@flipplay.id</a> (Pertanyaan Umum)
+                                    </p>
+                                    <p class="text-xs text-gray-400">
+                                        <a href="mailto:partnership@flipplay.id" class="text-brand-purple hover:underline">partnership@flipplay.id</a> (Kemitraan Konten)
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4 p-4 rounded-2xl bg-white/5 border border-white/10">
+                                <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 text-lg">
+                                    &#128222;
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-white">Customer Support WhatsApp</h4>
+                                    <p class="text-xs text-gray-300 mt-0.5 font-semibold">+62 812-3456-7890</p>
+                                    <p class="text-[11px] text-gray-500">Senin - Minggu, 08.00 - 22.00 WIB (Respon Cepat)</p>
+                                </div>
+                            </div>
+
+                        </address>
+
+                        <!-- Social Media Links -->
+                        <div class="pt-2">
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Ikuti FlipPlay di Media Sosial</p>
+                            <div class="flex items-center gap-3">
+                                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white/5 hover:bg-brand-pink/20 hover:text-brand-pink border border-white/10 flex items-center justify-center text-sm transition-all" aria-label="Instagram FlipPlay">
+                                    IG
+                                </a>
+                                <a href="https://x.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white/5 hover:bg-brand-pink/20 hover:text-brand-pink border border-white/10 flex items-center justify-center text-sm transition-all" aria-label="X Twitter FlipPlay">
+                                    X
+                                </a>
+                                <a href="https://discord.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white/5 hover:bg-brand-purple/20 hover:text-brand-purple border border-white/10 flex items-center justify-center text-sm transition-all" aria-label="Discord FlipPlay">
+                                    DC
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Interactive Semantic Contact Form (7 cols) -->
+                    <div class="lg:col-span-7">
+                        <div class="glass-card rounded-3xl p-6 sm:p-10 border border-white/10 shadow-2xl relative">
+                            
+                            <div class="mb-6">
+                                <h3 class="text-2xl font-bold text-white">Kirim Pesan atau Masukan</h3>
+                                <p class="text-xs sm:text-sm text-gray-400 mt-1">
+                                    Isi formulir di bawah ini dan perwakilan tim FlipPlay akan merespons dalam waktu 1x24 jam kerja.
+                                </p>
+                            </div>
+
+                            <!-- Semantic Form with fieldsets and legends -->
+                            <form id="contact-form" class="space-y-5" novalidate>
+                                
+                                <fieldset class="space-y-5">
+                                    <legend class="sr-only">Formulir Kontak Pengguna FlipPlay</legend>
+
+                                    <!-- Row 1: Nama Lengkap & Email -->
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div>
+                                            <label for="contact-name" class="block text-xs font-semibold text-gray-300 mb-1.5">
+                                                Nama Lengkap <span class="text-brand-pink">*</span>
+                                            </label>
+                                            <input type="text" id="contact-name" name="name" required placeholder="Contoh: Budi Santoso" class="w-full bg-black/40 border border-white/10 focus:border-brand-pink focus:ring-1 focus:ring-brand-pink rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 transition-all outline-none">
+                                        </div>
+
+                                        <div>
+                                            <label for="contact-email" class="block text-xs font-semibold text-gray-300 mb-1.5">
+                                                Alamat Email Aktif <span class="text-brand-pink">*</span>
+                                            </label>
+                                            <input type="email" id="contact-email" name="email" required placeholder="budi@example.com" class="w-full bg-black/40 border border-white/10 focus:border-brand-pink focus:ring-1 focus:ring-brand-pink rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 transition-all outline-none">
+                                        </div>
+                                    </div>
+
+                                    <!-- Row 2: Nomor WhatsApp & Kategori Subjek -->
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div>
+                                            <label for="contact-phone" class="block text-xs font-semibold text-gray-300 mb-1.5">
+                                                Nomor Telepon / WhatsApp
+                                            </label>
+                                            <input type="tel" id="contact-phone" name="phone" placeholder="081234567890" class="w-full bg-black/40 border border-white/10 focus:border-brand-pink focus:ring-1 focus:ring-brand-pink rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 transition-all outline-none">
+                                        </div>
+
+                                        <div>
+                                            <label for="contact-subject" class="block text-xs font-semibold text-gray-300 mb-1.5">
+                                                Kategori Pertanyaan <span class="text-brand-pink">*</span>
+                                            </label>
+                                            <select id="contact-subject" name="subject" required class="w-full bg-brand-dark-card border border-white/10 focus:border-brand-pink focus:ring-1 focus:ring-brand-pink rounded-xl px-4 py-3 text-sm text-white transition-all outline-none">
+                                                <option value="Uji Coba Gratis 14 Hari">Pertanyaan Uji Coba Gratis</option>
+                                                <option value="Kemitraan Konten / Creator">Kemitraan Konten &amp; Studio</option>
+                                                <option value="Bantuan Akun &amp; Pembayaran">Bantuan Akun &amp; Langganan</option>
+                                                <option value="Request Judul Anime/Manga">Request Judul Anime / Manga</option>
+                                                <option value="Masukan &amp; Feedback Web">Masukan &amp; Feedback Aplikasi</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Row 3: Textarea Pesan -->
+                                    <div>
+                                        <label for="contact-message" class="block text-xs font-semibold text-gray-300 mb-1.5">
+                                            Pesan atau Deskripsi Pertanyaan <span class="text-brand-pink">*</span>
+                                        </label>
+                                        <textarea id="contact-message" name="message" rows="4" required placeholder="Tuliskan pesan, pertanyaan, atau masukan Anda di sini secara detail..." class="w-full bg-black/40 border border-white/10 focus:border-brand-pink focus:ring-1 focus:ring-brand-pink rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 transition-all outline-none resize-none"></textarea>
+                                    </div>
+
+                                    <!-- Checkbox Persetujuan Kebijakan Privasi -->
+                                    <div class="flex items-start gap-2.5 pt-1">
+                                        <input type="checkbox" id="contact-consent" name="consent" required checked class="mt-1 rounded bg-black/40 border-white/20 text-brand-pink focus:ring-brand-pink">
+                                        <label for="contact-consent" class="text-xs text-gray-400">
+                                            Saya menyetujui <a href="#home" class="text-brand-pink hover:underline">Ketentuan Layanan</a> dan <a href="#home" class="text-brand-pink hover:underline">Kebijakan Privasi</a> FlipPlay untuk dihubungi terkait tanggapan pesan ini.
+                                        </label>
+                                    </div>
+
+                                </fieldset>
+
+        
+                                <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-brand-pink via-rose-500 to-brand-purple text-white font-extrabold text-sm shadow-xl shadow-brand-pink/25 hover:shadow-brand-pink/40 hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2">
+                                    <span>Kirim Pesan Sekarang</span>
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                                    </svg>
+                                </button>
+
+                            </form>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-black/90 border-t border-white/10 pt-16 pb-12 relative overflow-hidden" role="contentinfo">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-white/10">
+                
+                <!-- Column 1: Brand Info (2 cols width on large) -->
+                <div class="lg:col-span-2 space-y-4">
+                    <a href="#home" class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-pink to-brand-purple p-0.5">
+                            <div class="w-full h-full bg-brand-dark rounded-[10px] flex items-center justify-center">
+                                <span class="text-transparent bg-clip-text bg-gradient-to-tr from-brand-pink to-brand-purple font-extrabold text-lg">FP</span>
+                            </div>
+                        </div>
+                        <span class="text-2xl font-extrabold text-white">Flip<span class="text-brand-pink">Play</span></span>
+                    </a>
+                    <p class="text-xs sm:text-sm text-gray-400 max-w-sm leading-relaxed">
+                        Startup platform hiburan digital generasi baru yang mengintegrasikan layanan streaming video anime dan drama serta digital reader manga dan light novel dalam satu pengalaman web terpadu.
+                    </p>
+                </div>
+
+                <!-- Column 2: Navigasi Produk -->
+                <div>
+                    <h4 class="text-xs font-bold text-white uppercase tracking-wider mb-4">Layanan &amp; Fitur</h4>
+                    <ul class="space-y-2.5 text-xs text-gray-400">
+                        <li><a href="#fitur" class="hover:text-brand-pink transition-colors">Streaming Video 4K</a></li>
+                        <li><a href="#fitur" class="hover:text-brand-pink transition-colors">Digital Manga Reader</a></li>
+                        <li><a href="#keunggulan" class="hover:text-brand-pink transition-colors">Auto-Bridge Smart Sync</a></li>
+                        <li><a href="#katalog" class="hover:text-brand-pink transition-colors">Katalog Anime &amp; Manga</a></li>
+                        <li><a href="#harga" class="hover:text-brand-pink transition-colors">Paket Langganan</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Bantuan & Komunitas -->
+                <div>
+                    <h4 class="text-xs font-bold text-white uppercase tracking-wider mb-4">Komunitas &amp; Bantuan</h4>
+                    <ul class="space-y-2.5 text-xs text-gray-400">
+                        <li><a href="#kontak" class="hover:text-brand-pink transition-colors">Hubungi Layanan Pelanggan</a></li>
+                        <li><a href="#home" class="hover:text-brand-pink transition-colors">Forum Nobar Bersama</a></li>
+                        <li><a href="#kontak" class="hover:text-brand-pink transition-colors">Kemitraan Studio Konten</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Newsletter Subscription -->
+                <div>
+                    <h4 class="text-xs font-bold text-white uppercase tracking-wider mb-4">Buletin Mingguan</h4>
+                    <p class="text-xs text-gray-400 mb-3 leading-relaxed">
+                        Dapatkan jadwal rilis episode anime simulcast dan update manga mingguan langsung ke emailmu.
+                    </p>
+                    <form onsubmit="event.preventDefault(); alert('Terima kasih telah berlangganan buletin FlipPlay!');" class="space-y-2">
+                        <input type="email" required placeholder="Masukkan email Anda" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-brand-pink">
+                        <button type="submit" class="w-full py-2 rounded-lg bg-brand-pink hover:bg-brand-pink-dark text-white text-xs font-bold transition-colors">
+                            Berlangganan Gratis
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+
+            <!-- Footer Bottom Legal Links -->
+            <div class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500">
+                <div class="flex flex-wrap items-center gap-6">
+                    <a href="#home" class="hover:text-gray-400 transition-colors">Syarat &amp; Ketentuan</a>
+                    <a href="#home" class="hover:text-gray-400 transition-colors">Kebijakan Privasi</a>
+                    <a href="#home" class="hover:text-gray-400 transition-colors">Pedoman Komunitas</a>
+                    <a href="#home" class="hover:text-gray-400 transition-colors">Hak Cipta Konten</a>
+                </div>
+                <div>
+                    <span>Dirancang dengan cinta &bull; Praktikum Pemrograman Web</span>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+    <button id="scroll-top-btn" type="button" class="fixed bottom-6 right-6 z-40 p-3 rounded-full bg-brand-pink/90 hover:bg-brand-pink text-white shadow-xl shadow-brand-pink/30 opacity-0 invisible translate-y-5 transition-all duration-300 focus:outline-none" aria-label="Kembali ke atas">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+        </svg>
+    </button>
+
+    <!-- Feedback Toast for Contact Form Submission -->
+    <div id="form-feedback-toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 hidden max-w-md w-full px-4 translate-y-10 opacity-0 transition-all duration-300" role="alert">
+        <div class="glass-card border border-brand-pink/50 bg-slate-900/95 p-4 rounded-2xl shadow-2xl flex items-start gap-3 text-white">
+            <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 font-bold">
+                &#10003;
+            </div>
+            <div class="flex-1 text-xs sm:text-sm leading-relaxed" id="toast-message">
+                Pesan Anda berhasil dikirim!
+            </div>
+        </div>
+    </div>
+
+
+    <div id="vibe-modal-overlay" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4 transition-all duration-300">
+        <div id="vibe-modal-content" class="bg-brand-dark-card border border-white/15 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative p-6 sm:p-8 transform transition-all scale-95 opacity-0">
+            <button id="vibe-modal-close" type="button" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white flex items-center justify-center text-lg transition-colors" aria-label="Tutup jendela rincian">
+                &times;
+            </button>
+            <div id="vibe-modal-body">
+              
+            </div>
+        </div>
+    </div>
+
+
+    <script src="src/js/main.js"></script>
+
+    <script src="src/js/vibe-grid.js"></script>
+</body>
+</html>
